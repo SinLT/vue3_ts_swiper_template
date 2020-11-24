@@ -1,4 +1,4 @@
-# vue3_ts_swiper
+# vue3_ts_swiper multipage
 
 ## Project setup
 ```
