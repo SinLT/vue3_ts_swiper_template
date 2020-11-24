@@ -1,0 +1,89 @@
+{
+  "name": "ev4",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "serve": "vue-cli-service serve",
+    "build": "vue-cli-service build",
+    "lint": "vue-cli-service lint"
+  },
+  "dependencies": {
+    "ant-design-vue": "^2.0.0-rc.1",
+    "axios": "^0.21.0",
+    "axios-retry": "^3.1.9",
+    "core-js": "^3.6.5",
+    "swiper": "^6.3.5",
+    "vue": "^3.0.0",
+    "vue-router": "^4.0.0-0",
+    "vuex": "^4.0.0-0"
+  },
+  "devDependencies": {
+    "@types/swiper": "^5.4.1",
+    "@typescript-eslint/eslint-plugin": "^2.33.0",
+    "@typescript-eslint/parser": "^2.33.0",
+    "@vue/cli-plugin-babel": "~4.5.0",
+    "@vue/cli-plugin-eslint": "~4.5.0",
+    "@vue/cli-plugin-router": "^4.5.9",
+    "@vue/cli-plugin-typescript": "^4.5.9",
+    "@vue/cli-plugin-vuex": "^4.5.9",
+    "@vue/cli-service": "~4.5.0",
+    "@vue/compiler-sfc": "^3.0.0",
+    "@vue/eslint-config-typescript": "^5.0.2",
+    "babel-eslint": "^10.1.0",
+    "babel-plugin-import": "^1.13.1",
+    "eslint": "^7.14.0",
+    "eslint-plugin-vue": "^7.1.0",
+    "less": "^3.12.2",
+    "less-loader": "^7.1.0",
+    "postcss-px-to-viewport": "^1.1.1",
+    "sass": "^1.29.0",
+    "sass-loader": "^10.1.0",
+    "sass-resources-loader": "^2.1.1",
+    "typescript": "~3.9.3"
+  },
+  "eslintConfig": {
+    "root": true,
+    "env": {
+      "node": true
+    },
+    "plugins": [
+      "vue",
+      "@typescript-eslint/eslint-plugin"
+    ],
+    "rules": {
+      "vue/no-v-model-argument": "off",
+      "no-unused-vars": "off",
+      "@typescript-eslint/no-explicit-any": "off",
+      "@typescript-eslint/member-delimiter-style": "off",
+      "@typescript-eslint/no-var-requires": "off",
+      "@typescript-eslint/ban-ts-ignore": "off",
+      "prefer-const": "off"
+    },
+    "extends": [
+      "plugin:vue/essential",
+      "eslint:recommended",
+      "@vue/typescript/recommended"
+    ],
+    "overrides": [
+      {
+        "files": [
+          "**/tests/*.{j,t}s?(x)",
+          "**/tests/**/*.spec.{j,t}s?(x)",
+          "**/tests/*.spec.{j,t}s?(x)"
+        ],
+        "env": {
+          "mocha": true
+        }
+      }
+    ],
+    "parserOptions": {
+      "parser": "@typescript-eslint/parser",
+      "ecmaVersion": 2020
+    }
+  },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "not dead"
+  ]
+}
