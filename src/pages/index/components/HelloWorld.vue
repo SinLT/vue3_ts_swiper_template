@@ -1,7 +1,9 @@
 <template>
   <div class="hello">
     <h1 @click="addNumber"
-        ref="msgs">{{ msg }}{{ number }}{{ msgs?.clientHeight }}</h1>
+        ref="msgs">
+      {{ msg }}{{ number }}{{ msgs?.clientHeight }}
+    </h1>
     <swiper v-if="list.length > 0"
             :watchSlidesProgress="true"
             slidesPerView="auto"
@@ -34,23 +36,38 @@
         yiminghe
       </a-select-option>
     </a-select>
+    <a-empty :description="false" />
+    <a-statistic-countdown title="Countdown"
+                           :value="deadline"
+                           style="margin-right: 50px"
+                           @finish="onFinish" />
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, onMounted, reactive, toRefs, getCurrentInstance } from 'vue'
+import {
+  defineComponent,
+  onMounted,
+  reactive,
+  toRefs,
+  getCurrentInstance,
+} from 'vue'
 
 export default defineComponent({
   name: 'HelloWorld',
   props: {
-    msg: String
+    msg: String,
   },
   setup () {
     const state = reactive({
       value1: 'lucy',
       msgs: null,
       number: 0,
-      list: ['https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=338617558,1462083275&fm=26&gp=0.jpg', 'https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=338617558,1462083275&fm=26&gp=0.jpg']
+      list: [
+        'https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=338617558,1462083275&fm=26&gp=0.jpg',
+        'https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=338617558,1462083275&fm=26&gp=0.jpg',
+      ],
+      deadline: Date.now() + 6000
     })
     const api = getCurrentInstance()?.proxy?.$api
 
@@ -65,7 +82,11 @@ export default defineComponent({
     const handleChange = (value: string) => {
       console.log(`selected ${value}`)
     }
-    
+
+    const onFinish = () => {
+      console.log('onFinish')
+    }
+
     onMounted(async () => {
       const res = await api?.getAuthCheck()
       console.log(res)
@@ -75,9 +96,10 @@ export default defineComponent({
       ...toRefs(state),
       handleChange,
       focus,
-      addNumber
+      addNumber,
+      onFinish
     }
-  }
+  },
 })
 </script>
 

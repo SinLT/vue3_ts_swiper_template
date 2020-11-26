@@ -1,5 +1,7 @@
+/* eslint-disable @typescript-eslint/camelcase */
 const getEntry = require('./entry.js')
 const IS_DEV = process.env.NODE_ENV !== 'production'
+let pageNum = 0
 
 const DEVELOPMENT = webpackConfig => {
   webpackConfig.store.set('devtool', 'eval-source-map')
@@ -63,6 +65,7 @@ module.exports = {
     port: 8080,
     sockHost: '10.0.0.180'
   },
+  runtimeCompiler: false,
   productionSourceMap: false,
   publicPath: process.env.VUE_APP_Path,
   pages: getEntry('./src/pages/*/*.ts'), // 入口
@@ -103,12 +106,33 @@ module.exports = {
         args[0].screen = process.env.VUE_Screen
         return args
       })
+      config.plugins.delete(`prefetch-${iterator}`)
+      config.plugins.delete(`preload-${iterator}`)
+      pageNum++
     }
     IS_DEV ? DEVELOPMENT(config) : PRODUCTION(config)
   },
-  configureWebpack: {
-    externals: {
+  configureWebpack: config => {
+    config.externals = {
       'axios': 'axios'
+    }
+    if (!IS_DEV) {
+      config.optimization = {
+        // 分割代码块
+        splitChunks: {
+          cacheGroups: {
+            common: {
+            },
+            vendors: {
+              name: 'chunk-vendors',
+              minChunks: pageNum,
+              test: /node_modules/,
+              priority: -10,
+              chunks: 'initial'
+            }
+          }
+        }
+      }
     }
   }
 }
