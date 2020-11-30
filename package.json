@@ -13,7 +13,8 @@
     "axios-retry": "^3.1.9",
     "core-js": "^3.6.5",
     "swiper": "^6.3.5",
-    "vue": "^3.0.0",
+    "vue": "^3.0.3",
+    "vue-loader": "^16.0.0",
     "vue-router": "^4.0.0-0",
     "vuex": "^4.0.0-0"
   },
@@ -60,7 +61,7 @@
       "prefer-const": "off"
     },
     "extends": [
-      "plugin:vue/essential",
+      "plugin:vue/vue3-essential",
       "eslint:recommended",
       "@vue/typescript/recommended"
     ],

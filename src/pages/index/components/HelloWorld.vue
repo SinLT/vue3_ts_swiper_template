@@ -1,7 +1,8 @@
 <template>
   <div class="hello">
     <h1 @click="addNumber"
-        ref="msgs">
+        ref="msgs"
+        class="hello_h1">
       {{ msg }}{{ number }}{{ msgs?.clientHeight }}
     </h1>
     <swiper v-if="list.length > 0"
@@ -50,7 +51,8 @@ import {
   onMounted,
   reactive,
   toRefs,
-  getCurrentInstance,
+  onUnmounted,
+  getCurrentInstance
 } from 'vue'
 
 export default defineComponent({
@@ -58,7 +60,13 @@ export default defineComponent({
   props: {
     msg: String,
   },
+  data () {
+    return {
+      color: 'yellow'
+    }
+  },
   setup () {
+    const vm = getCurrentInstance()?.proxy
     const state = reactive({
       value1: 'lucy',
       msgs: null,
@@ -67,11 +75,13 @@ export default defineComponent({
         'https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=338617558,1462083275&fm=26&gp=0.jpg',
         'https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=338617558,1462083275&fm=26&gp=0.jpg',
       ],
-      deadline: Date.now() + 6000
+      deadline: Date.now() + 6000,
+      color: 'yellow',
+      colorInterval: 0
     })
-    const api = getCurrentInstance()?.proxy?.$api
 
     const addNumber = () => {
+      state.color = `#${Math.random().toString().slice(-6)}`
       state.number++
     }
 
@@ -88,8 +98,15 @@ export default defineComponent({
     }
 
     onMounted(async () => {
-      const res = await api?.getAuthCheck()
+      const res = await vm?.$api?.getAuthCheck()
       console.log(res)
+      state.colorInterval = setInterval(() => {
+        state.color = `#${Math.random().toString().slice(-6)}`
+      }, 100)
+    })
+
+    onUnmounted(() => {
+      clearInterval(state.colorInterval)
     })
 
     return {
@@ -104,7 +121,10 @@ export default defineComponent({
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
+<style vars="{ color }" lang="scss">
+.hello_h1 {
+  color: var(--color);
+}
 h3 {
   margin: 40px 0 0;
 }

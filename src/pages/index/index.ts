@@ -5,14 +5,8 @@ import store from './store'
 import { Select, Empty, Statistic } from 'ant-design-vue'
 import SwiperCore, { Navigation, Pagination, Autoplay } from 'swiper'
 import { Swiper, SwiperSlide } from 'swiper/vue'
-import api from '@/api'
 import 'swiper/swiper-bundle.min.css'
-
-declare module "@vue/runtime-core" {
-  interface ComponentCustomProperties {
-    $api: any
-  }
-}
+import api from '@/api'
 
 const app = createApp(App)
 app.component('Swiper', Swiper)
@@ -24,5 +18,6 @@ app.use(Select)
 app.use(Empty)
 app.use(Statistic)
 app.config.globalProperties.$api = api
+app.config.globalProperties.$name = '123'
 
 app.mount('#app')

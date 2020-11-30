@@ -1,6 +1,7 @@
+// 声明vue文件的导出类型
 declare module '*.vue' {
-  import { DefineComponent } from 'vue'
-  const component: DefineComponent<{}, {}, any>
+  import { defineComponent } from 'vue'
+  const component: ReturnType<typeof defineComponent>
   export default component
 }
 
