@@ -1,7 +1,8 @@
-import api from './api/index'
+import { AxiosRequestConfig } from 'axios'
 // 声明全局属性类型
-declare module '@vue/runtime-core' {
-  export interface ComponentCustomProperties {
-    $api: typeof api
+declare module 'axios' {
+  export interface AxiosRequestConfig {
+    retry?: number;
+    retryDelay?: number
   }
 }

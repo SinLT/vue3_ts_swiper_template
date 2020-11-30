@@ -18,30 +18,24 @@
              width="644" />
       </swiper-slide>
     </swiper>
-    <a-select v-model:value="value1"
-              style="width: 120px"
-              @focus="focus"
-              ref="select"
-              @change="handleChange">
-      <a-select-option value="jack">
-        Jack
-      </a-select-option>
-      <a-select-option value="lucy">
-        Lucy
-      </a-select-option>
-      <a-select-option value="disabled"
-                       disabled>
-        Disabled
-      </a-select-option>
-      <a-select-option value="Yiminghe">
-        yiminghe
-      </a-select-option>
-    </a-select>
-    <a-empty :description="false" />
-    <a-statistic-countdown title="Countdown"
-                           :value="deadline"
-                           style="margin-right: 50px"
-                           @finish="onFinish" />
+    <el-select v-model="value"
+               placeholder="请选择">
+      <el-option v-for="item in options"
+                 :key="item.value"
+                 :label="item.label"
+                 :value="item.value">
+      </el-option>
+    </el-select>
+    <el-time-picker v-model="value2"
+                    :picker-options="{
+                      selectableRange: '18:30:00 - 20:30:00'
+                    }"
+                    placeholder="任意时间点">
+    </el-time-picker>
+    <el-date-picker v-model="value3"
+                    type="date"
+                    placeholder="选择日期">
+    </el-date-picker>
   </div>
 </template>
 
@@ -51,9 +45,9 @@ import {
   onMounted,
   reactive,
   toRefs,
-  onUnmounted,
-  getCurrentInstance
+  onUnmounted
 } from 'vue'
+import api from '@/api'
 
 export default defineComponent({
   name: 'HelloWorld',
@@ -66,18 +60,34 @@ export default defineComponent({
     }
   },
   setup () {
-    const vm = getCurrentInstance()?.proxy
     const state = reactive({
-      value1: 'lucy',
       msgs: null,
       number: 0,
       list: [
         'https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=338617558,1462083275&fm=26&gp=0.jpg',
         'https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=338617558,1462083275&fm=26&gp=0.jpg',
       ],
-      deadline: Date.now() + 6000,
       color: 'yellow',
-      colorInterval: 0
+      colorInterval: 0,
+      options: [{
+        value: '选项1',
+        label: '黄金糕'
+      }, {
+        value: '选项2',
+        label: '双皮奶'
+      }, {
+        value: '选项3',
+        label: '蚵仔煎'
+      }, {
+        value: '选项4',
+        label: '龙须面'
+      }, {
+        value: '选项5',
+        label: '北京烤鸭'
+      }],
+      value: '',
+      value2: new Date(2016, 9, 10, 18, 40),
+      value3: ''
     })
 
     const addNumber = () => {
@@ -85,22 +95,14 @@ export default defineComponent({
       state.number++
     }
 
-    const focus = () => {
-      console.log('focus')
-    }
-
-    const handleChange = (value: string) => {
-      console.log(`selected ${value}`)
-    }
-
-    const onFinish = () => {
-      console.log('onFinish')
-    }
-
     onMounted(async () => {
-      const res = await vm?.$api?.getAuthCheck()
-      console.log(res)
-      state.colorInterval = setInterval(() => {
+      try {
+        const res = await api?.getAuthCheck()
+        console.log(res)
+      } catch (error) {
+        console.error(error)
+      }
+      state.colorInterval = window.setInterval(() => {
         state.color = `#${Math.random().toString().slice(-6)}`
       }, 100)
     })
@@ -111,10 +113,7 @@ export default defineComponent({
 
     return {
       ...toRefs(state),
-      handleChange,
-      focus,
-      addNumber,
-      onFinish
+      addNumber
     }
   },
 })
