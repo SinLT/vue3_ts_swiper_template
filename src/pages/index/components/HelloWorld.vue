@@ -45,7 +45,8 @@ import {
   onMounted,
   reactive,
   toRefs,
-  onUnmounted
+  onUnmounted,
+  getCurrentInstance
 } from 'vue'
 import api from '@/api'
 
@@ -60,6 +61,8 @@ export default defineComponent({
     }
   },
   setup () {
+    const proxy = getCurrentInstance()?.proxy?.$api
+    console.log(proxy)
     const state = reactive({
       msgs: null,
       number: 0,

@@ -12,8 +12,7 @@
     "core-js": "^3.6.5",
     "element-plus": "^1.0.1-beta.0",
     "swiper": "^6.3.5",
-    "vue": "^3.0.3",
-    "vue-loader": "^16.0.0",
+    "vue": "^3.0.0",
     "vue-router": "^4.0.0-0",
     "vuex": "^4.0.0-0"
   },
@@ -23,14 +22,11 @@
     "@typescript-eslint/parser": "^2.33.0",
     "@vue/cli-plugin-babel": "~4.5.0",
     "@vue/cli-plugin-eslint": "~4.5.0",
-    "@vue/cli-plugin-router": "^4.5.9",
     "@vue/cli-plugin-typescript": "^4.5.9",
-    "@vue/cli-plugin-vuex": "^4.5.9",
     "@vue/cli-service": "~4.5.0",
     "@vue/compiler-sfc": "^3.0.0",
     "@vue/eslint-config-typescript": "^5.0.2",
     "babel-eslint": "^10.1.0",
-    "babel-plugin-component": "^1.1.1",
     "babel-plugin-import": "^1.13.1",
     "eslint": "^7.14.0",
     "eslint-plugin-vue": "^7.1.0",
@@ -47,10 +43,6 @@
     "env": {
       "node": true
     },
-    "plugins": [
-      "vue",
-      "@typescript-eslint/eslint-plugin"
-    ],
     "rules": {
       "vue/no-v-model-argument": "off",
       "no-unused-vars": "off",
@@ -63,23 +55,10 @@
     "extends": [
       "plugin:vue/vue3-essential",
       "eslint:recommended",
-      "@vue/typescript/recommended"
-    ],
-    "overrides": [
-      {
-        "files": [
-          "**/tests/*.{j,t}s?(x)",
-          "**/tests/**/*.spec.{j,t}s?(x)",
-          "**/tests/*.spec.{j,t}s?(x)"
-        ],
-        "env": {
-          "mocha": true
-        }
-      }
+      "@vue/typescript"
     ],
     "parserOptions": {
-      "parser": "@typescript-eslint/parser",
-      "ecmaVersion": 2020
+      "parser": "@typescript-eslint/parser"
     }
   },
   "browserslist": [

@@ -113,10 +113,10 @@ module.exports = {
     IS_DEV ? DEVELOPMENT(config) : PRODUCTION(config)
   },
   configureWebpack: config => {
-    config.externals = {
-      'axios': 'axios'
-    }
     if (!IS_DEV) {
+      config.externals = {
+        'axios': 'axios'
+      }
       config.optimization = {
         // 分割代码块
         splitChunks: {
