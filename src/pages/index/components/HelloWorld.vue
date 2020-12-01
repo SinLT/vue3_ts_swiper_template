@@ -28,8 +28,8 @@
     </el-select>
     <el-time-picker v-model="value2"
                     :picker-options="{
-                      selectableRange: '18:30:00 - 20:30:00'
-                    }"
+        selectableRange: '18:30:00 - 20:30:00',
+      }"
                     placeholder="任意时间点">
     </el-time-picker>
     <el-date-picker v-model="value3"
@@ -46,23 +46,17 @@ import {
   reactive,
   toRefs,
   onUnmounted,
-  getCurrentInstance
+  getCurrentInstance,
 } from 'vue'
-import api from '@/api'
+import { ComponentInternalInstance } from '@vue/runtime-core'
 
 export default defineComponent({
   name: 'HelloWorld',
   props: {
     msg: String,
   },
-  data () {
-    return {
-      color: 'yellow'
-    }
-  },
   setup () {
-    const proxy = getCurrentInstance()?.proxy?.$api
-    console.log(proxy)
+    const { proxy } = getCurrentInstance() as ComponentInternalInstance
     const state = reactive({
       msgs: null,
       number: 0,
@@ -72,41 +66,51 @@ export default defineComponent({
       ],
       color: 'yellow',
       colorInterval: 0,
-      options: [{
-        value: '选项1',
-        label: '黄金糕'
-      }, {
-        value: '选项2',
-        label: '双皮奶'
-      }, {
-        value: '选项3',
-        label: '蚵仔煎'
-      }, {
-        value: '选项4',
-        label: '龙须面'
-      }, {
-        value: '选项5',
-        label: '北京烤鸭'
-      }],
+      options: [
+        {
+          value: '选项1',
+          label: '黄金糕',
+        },
+        {
+          value: '选项2',
+          label: '双皮奶',
+        },
+        {
+          value: '选项3',
+          label: '蚵仔煎',
+        },
+        {
+          value: '选项4',
+          label: '龙须面',
+        },
+        {
+          value: '选项5',
+          label: '北京烤鸭',
+        },
+      ],
       value: '',
       value2: new Date(2016, 9, 10, 18, 40),
-      value3: ''
+      value3: '',
     })
 
     const addNumber = () => {
-      state.color = `#${Math.random().toString().slice(-6)}`
+      state.color = `#${Math.random()
+        .toString()
+        .slice(-6)}`
       state.number++
     }
 
     onMounted(async () => {
       try {
-        const res = await api?.getAuthCheck()
+        const res = await proxy?.$api?.getAuthCheck()
         console.log(res)
       } catch (error) {
         console.error(error)
       }
       state.colorInterval = window.setInterval(() => {
-        state.color = `#${Math.random().toString().slice(-6)}`
+        state.color = `#${Math.random()
+          .toString()
+          .slice(-6)}`
       }, 100)
     })
 
@@ -116,16 +120,16 @@ export default defineComponent({
 
     return {
       ...toRefs(state),
-      addNumber
+      addNumber,
     }
   },
 })
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style vars="{ color }" lang="scss">
+<style lang="scss" scoped>
 .hello_h1 {
-  color: var(--color);
+  color: v-bind(color);
 }
 h3 {
   margin: 40px 0 0;

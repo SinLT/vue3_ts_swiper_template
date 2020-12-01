@@ -10,6 +10,6 @@ declare module 'axios' {
 
 declare module '@vue/runtime-core' {
   interface ComponentCustomProperties {
-    $api: typeof api
+    $api?: typeof api
   }
 }
